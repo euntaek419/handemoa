@@ -112,7 +112,7 @@ h4{
 .postmanage_title_container{
 	width: 100%;
 	display:flex;
-	background-color: #7D7D7D ;
+	background-color: rgb(209, 209, 209);
 	margin-bottom: 10px;
 	justify-content: space-between;
 }
@@ -147,7 +147,7 @@ h4{
 	width: 100px;
 	height: 30px;
 	border:none;
-	background: #7D7D7D ;
+	background: rgb(209, 209, 209);
 	font-size:17px;
 	font-weight: bold;
 }
@@ -161,7 +161,7 @@ h4{
 .postmanage_container{
 	width: 100%;
 	display:flex;
-	background-color: rgb(209, 209, 209) ;
+	background-color: #f4f4f4;
 }
 
 .post_item{

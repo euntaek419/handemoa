@@ -124,7 +124,7 @@ public class PostManageController {
 		}		
 		
 		
-		// 회원 선택 삭제
+		// 히스토리 게시물 선택 삭제
 		@ResponseBody
 		@RequestMapping(value = "/deletepost", method = RequestMethod.POST)
 		public int deleteselect(@RequestParam(value="valueArr[]") List<Integer> valueArr) {

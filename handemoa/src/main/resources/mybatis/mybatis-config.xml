@@ -7,21 +7,23 @@
 <!-- sql 실행 결과 XXXDTO 매핑 -->
 <typeAliases>
 	<!-- 예은님 -->
-	<typeAlias type="index.IndexDTO" alias="indexdto"/>
-	<typeAlias type="admin.AdminDTO" alias="admindto"/>
-	<typeAlias type="notice.NoticeDTO" alias="noticedto"/>
-	<typeAlias type="notice.PageDTO" alias="pagedto"/>
-	<typeAlias type="notice.SearchDTO" alias="searchdto"/>
-	<typeAlias type="adminmember.AdminMemberDTO" alias="adminmemberdto"/>
-	<typeAlias type="adminmember.PageDTO" alias="adminpagedto"/>
-	<typeAlias type="adminmember.SearchDTO" alias="adminsearchdto"/>
-	<typeAlias type="postmanage.PostManageDTO" alias="postmanagedto"/>
-	<typeAlias type="postmanage.PageDTO" alias="postmanagepagedto"/>
-	<typeAlias type="postmanage.SearchDTO" alias="postmanagesearchdto"/>
-	<typeAlias type="profile.ProfileDTO" alias="profiledto"/>
-	<typeAlias type="profile.PageDTO" alias="profilepagedto"/>
-	<typeAlias type="profile.SearchDTO" alias="profilesearchdto"/>
-	
+		<typeAlias type="index.IndexDTO" alias="indexdto"/>
+		<typeAlias type="admin.AdminDTO" alias="admindto"/>
+		<typeAlias type="notice.NoticeDTO" alias="noticedto"/>
+		<typeAlias type="notice.PageDTO" alias="pagedto"/>
+		<typeAlias type="notice.SearchDTO" alias="searchdto"/>
+		<typeAlias type="adminmember.AdminMemberDTO" alias="adminmemberdto"/>
+		<typeAlias type="adminmember.PageDTO" alias="adminpagedto"/>
+		<typeAlias type="adminmember.SearchDTO" alias="adminsearchdto"/>
+		<typeAlias type="postmanage.PostManageDTO" alias="postmanagedto"/>
+		<typeAlias type="postmanage.PageDTO" alias="postmanagepagedto"/>
+		<typeAlias type="postmanage.SearchDTO" alias="postmanagesearchdto"/>
+		<typeAlias type="profile.ProfileDTO" alias="profiledto"/>
+		<typeAlias type="profile.PageDTO" alias="profilepagedto"/>
+		<typeAlias type="profile.SearchDTO" alias="profilesearchdto"/>
+		<!-- 한데MORE -->
+	   	<typeAlias type="note.NoteDTO" alias="notedto"/>
+	   	<typeAlias type="todo.TodoDTO" alias="tododto"/>
 	
 	<!-- 정년님 -->
 		<!-- 관리자 신고 관리 -->
@@ -41,6 +43,13 @@
 	   <!-- 검색 -->
 	   <typeAlias type="search.SearchPostJoinDTO" alias="searchpostjoindto"/>
    
+	   <!-- 한데MORE - dday -->
+	   <typeAlias type="dday.DdayDTO" alias="ddaydto"/>
+	   <typeAlias type="calendar.CalDdayDTO" alias="calddaydto"/>
+	   <typeAlias type="calendar.CalOxDTO" alias="caloxdto"/>
+	   <typeAlias type="calendar.CalStudyDTO" alias="calstudydto"/>
+	   <typeAlias type="calendar.CalTodoDTO" alias="caltododto"/>
+   		
    
    <!-- 세윤님 -->
    <typeAlias type="category1.CategoryDTO" alias="categorydto"/>
@@ -48,6 +57,7 @@
    <typeAlias type="rankpost.RankPostDTO" alias="rankpostdto"/>
    <typeAlias type="rankpost.RankBoardVO" alias="rankboardvo"/>
    <typeAlias type="rankpost.CommentVO" alias="commentvo"/>
+   <typeAlias type="rankpost.AlarmDTO" alias="alarmdto"/>
    
    
    <!-- 윤석님 -->

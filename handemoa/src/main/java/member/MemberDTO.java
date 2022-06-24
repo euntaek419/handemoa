@@ -20,5 +20,4 @@ public class MemberDTO {
 	String quitdate;
 	String profileimg;
 	String intro;
-	
 }

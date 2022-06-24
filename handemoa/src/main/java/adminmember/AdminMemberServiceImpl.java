@@ -45,7 +45,32 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 	public int searchcount(SearchDTO search) {
 		return dao.searchcount(search);
 	}
-
+	
+	//회원 선택 탍퇴
+	@Override
+	public int updatepost(String no) {
+		return dao.updatepost(no);
+	}
+	
+	//회원 선택 탍퇴
+	@Override
+	public int updatecomment(String no) {
+		return dao.updatecomment(no);
+	}
+	
+	//회원 선택 탍퇴
+	@Override
+	public int updatecommentreport(String no) {
+		return dao.updatecommentreport(no);
+	}
+		
+	//회원 선택 탍퇴
+	@Override
+	public int updatepostreport(String no) {
+		return dao.updatepostreport(no);
+	}
+	
+	
 	//회원 선택 탍퇴
 	@Override
 	public int quitselect(String no) {

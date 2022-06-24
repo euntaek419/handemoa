@@ -30,25 +30,22 @@
 		<div id="nav_area">
 			<div id="nav_space">
 				<div id="logo">
-					<a href="/index"> <img src="css/images/logo.png" />
+					<a href="/handemoa"> <img src="css/images/logo.png" />
 					</a>
 				</div>
 				<div id="nav_profile">
 					<div id="nav_profile_img">
-
 						<img src="css/images/${member.profileimg}"
 							style="border-radius: 80%;" width="100%" />
-
-
 					</div>
 					<c:choose>
 						<c:when test="${isLogOn == true && member!= null}">
 
-							<a href="/profile?nickname=${member.nickname}"><h3
-									style="text-align: center;">${member.nickname}님</h3></a>
+							<a href="/profile?nickname=${member.nickname}">
+							<h3	style="text-align: center;">${member.nickname} 님</h3></a>
 							<div style="display: flex;">
 								<button id="nav_login_btn" onclick="location.href='/logout'"
-									style="color: white; background-color: #E02C1B">로그아웃</button>
+									style="color: white; background-color: #ce4764">로그아웃</button>
 								<button id="nav_login_btn" onclick="location.href='/memberedit'"
 									style="color: white; background-color: gray; margin-left: 10px; font-size: 5px;">회원정보수정</button>
 
@@ -76,6 +73,27 @@
 						<a href="/notice"> <!-- 해당 링크 이동 -->
 							<h4>공지사항</h4></a>
 					</div>
+					
+					
+					<c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -93,7 +111,7 @@
 								
 									<b
 										style="color: red; font-size: 20px; letter-spacing: -0.03em;">프로필
-										사진 변경</b> <br>
+										사진 변경</b> <br> <br>
 									<div id="profileimg_text">
 										<form id="profileimg_form" enctype="multipart/form-data"
 											onsubmit="return false">
@@ -106,8 +124,8 @@
 											
 											<input type=file name="profileimgadd">
 											<!-- 한개 -->
-											<button id="profileimg_btn">프로필 등록</button>
 											<button id="profileimg_preview_btn">프로필 미리보기</button>
+											<button id="profileimg_btn">프로필 등록</button>
 										</form>
 										<!-- <input id=fileatt_text> <input
 											id="fileatt_btn" type="file"> <br> -->
@@ -154,19 +172,20 @@
 										<font id="idcheck_font" size="2"></font> <br>
 										<!-- nickname -->
 										<div id="nickname">
+										<input id="nicknamecheck1" hidden="hidden" value="${member.nickname}"></input>
 											<b style="margin-right: 55px;">닉네임</b>
 											<div id="nickname_box">
 												<input id=nickname_nickname class=class_nickname type=text
 													minlength="2" maxlength="12" size="40" name="nickname"
 													required="required" pattern="[a-zA-Z0-9가-힣]{2,12}"
-													placeholder="${member.nickname}"
+													placeholder="현재 닉네임 : ${member.nickname}"
 													title="2~12자의 한글,영문,숫자만 가능합니다.">
 											</div>
-											<button id="nickname_change_btn" type="button">중복확인</button>
+											<!-- <button id="nickname_change_btn" type="button">중복확인</button> -->
 
 										</div>
 										<font id="nicknamecheck_font" size="2"
-											style="margin-left: 150px;"></font> <br> <br>
+											style="margin-left: 100px;"></font> <br> <br>
 
 										<div id="pw">
 											<b style="margin-right: 40px;">패스워드</b>
@@ -194,10 +213,10 @@
 											</div>
 										</div>
 										<div class="pw_success_class" id="pw_success_id"
-											style="font-size: 11px; color: green; margin-left: 150px;"
+											style="font-size: 11px; color: green; margin-left: 100px;"
 											hidden="hidden">비밀번호가 일치합니다.</div>
 										<div class="pw_fail_class" id="pw_fail_id"
-											style="font-size: 11px; color: red; margin-left: 150px;"
+											style="font-size: 11px; color: red; margin-left: 100px;"
 											hidden="hidden">비밀번호가 일치하지 않습니다. 다시 확인해주세요.</div>
 
 
@@ -217,6 +236,7 @@
 
 										<!-- 전화번호 -->
 										<div id="phone">
+										<input id="phonecheck1" hidden="hidden" value="${member.phone}"></input>
 											<b style="margin-right: 20px;">휴대폰 번호</b>
 											<!-- 줄이면 간격 줄음 -->
 											<div id="phone_box">
@@ -224,14 +244,14 @@
 													name="phone" required="required"
 													onkeyup="inputPhoneNumber(this);" size="40"
 													title="010-0000-0000 형식을 맞춰주세요."
-													placeholder="${member.phone}" />
+													placeholder="현재 번호 : ${member.phone}" />
 											</div>
 
-											<button id="phone_change_btn" type="button"
-												class=repeat_check_class>중복확인</button>
+											<!-- <button id="phone_change_btn" type="button"
+												class=repeat_check_class>중복확인</button> -->
 										</div>
 										<font id="phonecheck_font" size="2"
-											style="margin-left: 150px;"></font> <br> <br>
+											style="margin-left: 100px;"></font> <br> <br>
 										<div id="birth">
 											<b style="margin-right: 40px;">생년월일</b> <input id="birth_box"
 												placeholder="${member.birth}" disabled>
@@ -244,20 +264,21 @@
 									<div style="float: right;"></div>
 									<br>
 									<br>
+
 									<button id="memberout" onclick="memberquit()">회원탈퇴</button>
 
 									<button id="editcomple" type="submit">수정완료</button>
-
 								</form>
 							</div>
 						</div>
 						<div id="membereditboard_area">
 							<div id="membereditboard_area_box">
 								<img class="board_profileimg" src="css/images/${member.profileimg}"/>
+								
 								<div></div>
 								<h3>${member.nickname}</h3>
 								<div></div>
-								<p>${member.intro}</p>
+								<p class="introtextarea">${member.intro}</p>
 							</div>
 						</div>
 					</div>

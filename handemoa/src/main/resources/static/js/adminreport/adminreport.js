@@ -8,6 +8,13 @@ $(window).on('load', (function(){
 	if(divisioncode == null) divisioncode = 0;
 	$('#divisioncode').val(divisioncode).prop('selected', true);
 	
+	var search = searchParams.get("search");
+	if(search == null) search = 0;
+	$('#search_select').val(search).prop('selected', true);
+	
+	var searchtxt = searchParams.get("searchtxt");
+	$('#searchdetail').val(searchtxt);
+	
 	//현재 페이지 번호에 색상 변경
 	var currentpage = searchParams.get("currentpage");
 	//console.log(currentpage);

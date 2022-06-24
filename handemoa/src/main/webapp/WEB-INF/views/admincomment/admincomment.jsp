@@ -76,35 +76,34 @@
                     </div>
 					<!-- 상세 검색 / 삭제 버튼-->
 					<div class="content_head">
-						<div class="content_head_item">						
-							상세 검색
-						</div>
-						<div class="content_head_item">
-							<select id="divisioncode" name="divisioncode">
-								<option value="0">전체검색</option>
-								<option value="1">커뮤니티</option>
-								<option value="2">강의랭킹</option>
-							</select>						
-						</div>
-						<div class="content_head_item">
-							<select id="comment_search" name="comment_search">
-								<option value="0">전체검색</option>
-								<option value="1">댓글번호</option>
-								<option value="2">글번호</option>
-								<option value="3">댓글내용</option>
-								<option value="4">닉네임</option>
-							</select>						
-						</div>
-						<div class="content_head_item">
-							<div id="comment_search_box">
-							<input type="text" id="comment_searchdetail">
-							</div>
-						</div>
-						<div class="content_head_item">
-							<img id="search_btn" src="/css/images/search_icon.png"/>
-						</div>
-						<div class="content_head_item">
+						<div class="content_head_delete">
 							<button id="delete_btn">삭제</button>
+						</div>
+						<div class="content_head_search">
+							<div class="content_search_item">						
+								상세 검색
+							</div>
+							<div class="content_search_select">
+								<select id="divisioncode" name="divisioncode" class="search_select">
+									<option value="0">전체검색</option>
+									<option value="1">커뮤니티</option>
+									<option value="2">강의랭킹</option>
+								</select>						
+							</div>
+							<div class="content_search_select">
+								<select id="comment_search" name="comment_search" class="search_select">
+									<option value="0">전체검색</option>
+									<option value="1">댓글번호</option>
+									<option value="2">댓글내용</option>
+									<option value="3">닉네임</option>
+								</select>						
+							</div>
+							<div id="comment_search_box">
+								<input type="text" id="comment_searchdetail">
+							</div>							
+							<div class="comment_search_btn">
+								<img id="search_btn" src="/css/images/search_icon.png"/>
+							</div>
 						</div>
 					</div>
 
@@ -168,7 +167,9 @@
 								</div>
 							</c:if>						
 							<c:if test="${pagedto.beginPage == 0}">
-								<a class="false"></a>
+								<div class="page">
+									<a class="false">0</a>
+								</div>
 							</c:if>						
 						</c:forEach>
 							

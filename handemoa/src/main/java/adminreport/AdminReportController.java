@@ -28,38 +28,30 @@ public class AdminReportController {
 
 	@RequestMapping("/adminpostreport")
 	public ModelAndView postReportList() {
-		return postReportPaging(0, 1);
+		return postReportSearch(0, 1, 0, "");
 	}
-	
-	//게시글 신고 분류별 조회
-	@RequestMapping("/adminpostreport/division")
-	public ModelAndView postReportPaging(int divisioncode, int currentpage) {
+
+	//게시글 신고 조회
+	@RequestMapping("/adminpostreport/search")
+	public ModelAndView postReportSearch(int divisioncode, int currentpage, int search, String searchtxt) {
 		ModelAndView mv = new ModelAndView();
-		List<PostReportJoinDTO> postReportList;
-		
-		//페이지 버튼 클릭하면 page 값, 글 분류값 전송
-		int postReporTotalRows = 0;			
+		//divisioncode 0 전체 검색, 1 커뮤니티, 2 강의랭킹
+		//search 0 전체 검색, 1 글제목, 2 닉네임
+		//searchtxt 검색 text입력 값
 					
 		int pageStartRow = limitRows * ( currentpage - 1);
 		
-		//sql 조회 limit 설정 
-		int[] page = {pageStartRow, limitRows};
+		Map<String, Object> searchdetail = new HashMap<String, Object>();
+		searchdetail.put("divisioncode", divisioncode);
+		searchdetail.put("search", search);
+		searchdetail.put("searchtxt", searchtxt);
+		searchdetail.put("pagestartrow", pageStartRow);
+		searchdetail.put("limitrows", limitRows);
 		
-		Map<String, Integer> division = new HashMap<String, Integer>();
-		division.put("divisioncode", divisioncode);
-		division.put("pagestartrow", pageStartRow);
-		division.put("limitrows", limitRows);
-		
-		if(divisioncode == 0) {
-			//전체검색
-			postReportList = service.postReportList(page);
-			postReporTotalRows = service.postReporTotalRows();
-		}
-		else { 
-			//division별 조회
-			postReportList = service.divisionPostReport(division);
-			postReporTotalRows = service.postReportDivisionRows(divisioncode);
-		}
+
+		List<PostReportJoinDTO> postReportList = service.searchPostReport(searchdetail);
+		int postReporTotalRows = service.searchPostReportRows(searchdetail);
+	
 		
 		AdminRCPageDTO reportpagedto = new AdminRCPageDTO(limitRows, limitPage, currentpage, postReporTotalRows);
 
@@ -69,7 +61,7 @@ public class AdminReportController {
 		mv.setViewName("adminreport/postreport");	
 		return mv;
 	}
-
+	
 	//게시글 신고 상세 내역 조회
 	@ResponseBody
 	@RequestMapping(value="/adminpostreport/detail", method=RequestMethod.POST)
@@ -89,38 +81,29 @@ public class AdminReportController {
 	//댓글 신고 내역 페이지
 	@RequestMapping("/admincommentreport")
 	public ModelAndView commentReportList() {
-		return commentReportPaging(0, 1);
+		return commentReportSearch(0, 1, 0, "");
 	}
-	
-	//댓글 신고 분류별 조회
-	@RequestMapping("/admincommentreport/division")
-	public ModelAndView commentReportPaging(int divisioncode, int currentpage) {
+
+	//댓글 신고 조회
+	@RequestMapping("/admincommentreport/search")
+	public ModelAndView commentReportSearch(int divisioncode, int currentpage, int search, String searchtxt) {
 		ModelAndView mv = new ModelAndView();
-		List<CommentReportJoinDTO> commentReportList;
-		System.out.println("divisioncode " + divisioncode);
-		System.out.println("currentpage " + currentpage);
-		//페이지 버튼 클릭하면 page 값, 글 분류값 전송
-		int commentReporTotalRows = 0;			
+		//divisioncode 0 전체 검색, 1 커뮤니티, 2 강의랭킹
+		//search 0 전체 검색, 1 댓글내용, 2 닉네임
+		//searchtxt 검색 text입력 값
 					
 		int pageStartRow = limitRows * ( currentpage - 1);
 		
-		int[] page = {pageStartRow, limitRows};
+		Map<String, Object> searchdetail = new HashMap<String, Object>();
+		searchdetail.put("divisioncode", divisioncode);
+		searchdetail.put("search", search);
+		searchdetail.put("searchtxt", searchtxt);
+		searchdetail.put("pagestartrow", pageStartRow);
+		searchdetail.put("limitrows", limitRows);
 		
-		Map<String, Integer> division = new HashMap<String, Integer>();
-		division.put("divisioncode", divisioncode);
-		division.put("pagestartrow", pageStartRow);
-		division.put("limitrows", limitRows);
-		
-		if(divisioncode == 0) {
-			//전체검색
-			commentReportList = service.commentReportList(page);
-			commentReporTotalRows = service.commentReporTotalRows();
-		}
-		else {
-			commentReportList = service.divisionCommentReport(division);
-			commentReporTotalRows = service.commentReportDivisionRows(divisioncode);
-		}
-		
+		List<CommentReportJoinDTO> commentReportList = service.searchCommentReport(searchdetail);
+		int commentReporTotalRows = service.searchCommentReportRows(searchdetail);	
+	
 		AdminRCPageDTO reportpagedto = new AdminRCPageDTO(limitRows, limitPage, currentpage, commentReporTotalRows);
 
 		mv.addObject("divisioncode", divisioncode);
@@ -129,7 +112,6 @@ public class AdminReportController {
 		mv.setViewName("adminreport/commentreport");	
 		return mv;
 	}
-
 	//댓글 신고 상세 내역 조회
 	@ResponseBody
 	@RequestMapping(value="/admincommentreport/detail", method=RequestMethod.POST)

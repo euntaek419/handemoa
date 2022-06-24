@@ -8,7 +8,7 @@
     margin-bottom: 40px;
 }
 #bookmark_content_box{
-	padding:20px 30px 30px 30px;
+	padding:10px 30px 30px 30px;
 }
 /*해당 페이지 네비바*/
 .nav_list_area:nth-child(1){
@@ -20,13 +20,11 @@
 }
 /*페이지 제목*/
 .content_title{
-	display: flex;
+	padding: 10px;
+    display: flex;
+    align-items: center;
     font-size: 20px;
     font-weight: bold;
-}
-.title_bar{
-    flex-grow: 1;
-    margin: 0px 20px 10px 20px;
 }
 
 /*글 제목 검색*/
@@ -57,7 +55,7 @@
 #bookmark_searchdetail {
     width: 150px;
     height: 28px;
-    margin-left: 4px;
+    margin-left: 10px;
     border: none;
     outline: none;
     background-color: transparent;
@@ -75,6 +73,13 @@
 }
 
 /*북마크 게시글 목록*/
+/*검색 결과 없음*/
+#bookmark_list > p {
+	margin: 10px;
+	font-size: 20px;
+    font-weight: bold;
+    color:grey;
+}
 #bookmark_list{
 	padding:20px;
 	padding-top: 0px;
@@ -93,17 +98,26 @@
 }
 .list_item{
 	padding:7px;
+	flex-direction: column;
 }
 .bookmark_row{
-	display:inline-flex;
+	display:flex;
 	width:100%;
-	margin:1px;
+	margin:1px;	
 }
-.bookmark_row > .bookmark_item{
-	margin-right: 15px;
+.bookmark_row:first-child > .bookmark_item:first-child{
+	width:100px;
 }
+.bookmark_item:nth-child(2), .bookmark_item:nth-child(3){
+	padding-right:7px;
+	white-space: nowrap;
+  	overflow: hidden;
+    text-overflow: ellipsis;  /*말줄임 적용*/
+    width:500px;
+}
+
 .bookmark_item_title{
-	width:90%;
+	width:100%;
 	font-size:20px;
 	font-weight: bold;
 	white-space: nowrap;
@@ -133,7 +147,7 @@
 }
 
 .direction_prev .false, .direction_next .false{
-	color: black;
+	color: white;
 }
 
 .direction_next div{

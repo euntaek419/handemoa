@@ -77,19 +77,33 @@
 					
 					<!-- 상세 검색 / 삭제 버튼-->
 					<div class="content_head">
-						<div class="content_head_item">
-							<select id="divisioncode" name="divisioncode">
-								<option value="0">전체검색</option>
-								<option value="1">커뮤니티</option>
-								<option value="2">강의랭킹</option>
-							</select>
-							댓글 분류 검색							
-						</div>
-						<div class="content_head_item">
-							<img id="division_btn" src="/css/images/search_icon.png"/>
-						</div>
-						<div class="content_head_item">
+						<div class="content_head_delete">
 							<button id="delete_btn">삭제</button>
+						</div>
+						<div class="content_head_search">
+							<div class="content_search_item">						
+								상세 검색
+							</div>
+							<div class="content_search_select">
+								<select id="divisioncode" name="divisioncode" class="search_select">
+									<option value="0">전체검색</option>
+									<option value="1">커뮤니티</option>
+									<option value="2">강의랭킹</option>
+								</select>						
+							</div>
+							<div class="content_search_select">
+								<select id="search_select" name="search" class="search_select">
+									<option value="0">전체검색</option>
+									<option value="1">댓글내용</option>
+									<option value="2">닉네임</option>
+								</select>						
+							</div>
+							<div id="content_search_box">
+								<input type="text" id="searchdetail">
+							</div>							
+							<div class="content_search_btn">
+								<img id="search_btn" src="/css/images/search_icon.png"/>
+							</div>
 						</div>
 					</div>
 
@@ -153,7 +167,9 @@
 								</div>
 							</c:if>						
 							<c:if test="${reportpagedto.beginPage == 0}">
-								<a class="false"></a>
+								<div class="page">
+									<a class="false">0</a>
+								</div>
 							</c:if>						
 						</c:forEach>
 							
@@ -188,7 +204,7 @@
 								<div class="modal_content_body">
 									<div class="reportdetail">
 										<div class="reportdetail_head">
-											<div class="report"></div>
+											<div class="report">번호</div>
 											<div class="report">신고 회원 아이디</div>
 											<div class="report">신고 사유</div>
 										</div>

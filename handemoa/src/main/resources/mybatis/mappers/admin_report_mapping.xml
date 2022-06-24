@@ -4,27 +4,66 @@
 
 <mapper namespace="adminreport.AdminReportDAO">
 	<!-- 게시글 신고 sql -->
-	<!-- view table -->
-	<!-- paging 조회 -->
-	<select id="postReportList" resultType="postreportjoindto" parameterType="int[]">
-		select * from postreportjoin order by postnum limit
-		<foreach collection="array" item="page" separator=",">
-			#{page}
-		</foreach>
-	</select>
-	<!-- 카테고리별 신고 조회 -->
-	<select id="divisionPostReport" resultType="postreportjoindto" parameterType="hashmap">
-		select * from postreportjoin 
-		where divisioncode = #{divisioncode} 
+	<!-- 게시글 신고 조회 -->
+	<select id="searchPostReport" resultType="postreportjoindto" parameterType="hashmap">
+		select pr.divisioncode, d.divisionname, m.nickname, pr.postnum,
+		p.posttitle, count(pr.postnum) as count
+		from
+		postreport as pr
+		inner join post as p
+		on pr.postnum = p.postnum
+		inner join division as d
+		on d.divisioncode = pr.divisioncode
+		inner join member as m
+		on m.id = p.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	p.posttitle like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and p.posttitle like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and pr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by postnum 
 		order by postnum limit #{pagestartrow}, #{limitrows}
 	</select>
-	<!-- 신고 내역 총 개수 -->
-	<select id="postReporTotalRows" resultType="int">
-		select count(*) from postreportjoin
-	</select>
-	<!-- 분류별 신고 내역 총 개수 -->
-	<select id="postReportDivisionRows" resultType="int" parameterType="int">
-		select count(*) from postreportjoin where divisioncode = #{divisioncode}
+	<!-- 게시글 신고 조회 총 개수 -->
+	<select id="searchPostReportRows" resultType="int" parameterType="hashmap">
+		select count(*)
+		from
+		(select pr.divisioncode, d.divisionname, m.nickname, pr.postnum,
+		p.posttitle, count(pr.postnum) as count
+		from
+		postreport as pr
+		inner join post as p
+		on pr.postnum = p.postnum
+		inner join division as d
+		on d.divisioncode = pr.divisioncode
+		inner join member as m
+		on m.id = p.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	p.posttitle like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and p.posttitle like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and pr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by postnum) c
 	</select>
 
 	<!-- 신고 사유 조회 -->
@@ -40,26 +79,66 @@
 	</delete>
 
 	<!-- 댓글 신고  -->
-	<!-- paging 조회 -->
-	<select id="commentReportList" resultType="commentreportjoindto" parameterType="int[]">
-		select * from commentreportjoin order by commentnum limit
-		<foreach collection="array" item="page" separator=",">
-			#{page}
-		</foreach>
-	</select>
-	<!-- 카테고리별 신고 조회 -->
-	<select id="divisionCommentReport" resultType="commentreportjoindto" parameterType="hashmap">
-		select * from commentreportjoin 
-		where divisioncode = #{divisioncode} 
+	<!-- 댓글 신고 조회 -->
+	<select id="searchCommentReport" resultType="commentreportjoindto" parameterType="hashmap">
+		select cr.divisioncode, d.divisionname, m.nickname, cr.commentnum,
+		commentcontent, count(cr.commentnum) as count
+		from
+		commentreport as cr
+		inner join comment as c
+		on cr.commentnum = c.commentnum
+		inner join division as d
+		on d.divisioncode = cr.divisioncode
+		inner join member as m
+		on m.id = c.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	commentcontent like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and commentcontent like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and cr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by commentnum 
 		order by commentnum limit #{pagestartrow}, #{limitrows}
 	</select>
-	<!-- 신고 내역 총 개수 -->
-	<select id="commentReporTotalRows" resultType="int">
-		select count(*) from commentreportjoin
-	</select>
-	<!-- 분류별 신고 내역 총 개수 -->
-	<select id="commentReportDivisionRows" resultType="int" parameterType="int">
-		select count(*) from commentreportjoin where divisioncode = #{divisioncode}
+	<!-- 댓글 신고 조회 총 개수 -->
+	<select id="searchCommentReportRows" resultType="int" parameterType="hashmap">
+		select count(*)
+		from
+		(select cr.divisioncode, d.divisionname, m.nickname, cr.commentnum,
+		commentcontent, count(cr.commentnum) as count
+		from
+		commentreport as cr
+		inner join comment as c
+		on cr.commentnum = c.commentnum
+		inner join division as d
+		on d.divisioncode = cr.divisioncode
+		inner join member as m
+		on m.id = c.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	commentcontent like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and commentcontent like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and cr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by commentnum) c
 	</select>
 
 	<!-- 신고 사유 조회 -->

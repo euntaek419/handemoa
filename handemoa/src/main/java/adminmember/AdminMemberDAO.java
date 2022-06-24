@@ -30,6 +30,19 @@ public interface AdminMemberDAO {
   	//사용자 및 관리자 공지검색 총 갯수
   	public int searchcount(SearchDTO search);
   	
+  	
+    //회원 선택 탍퇴
+  	public int updatepost(String no);
+  	
+  //회원 선택 탍퇴
+  	public int updatecomment(String no);
+  	
+  	 //회원 선택 탍퇴
+  	public int updatecommentreport(String no);
+  	
+  	 //회원 선택 탍퇴
+  	public int updatepostreport(String no);
+  	
   	//회원 선택 탍퇴
   	public int quitselect(String no);
   	

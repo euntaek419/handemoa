@@ -3,14 +3,14 @@
  	let reportnum; //신고하는 게시글 or 댓글 번호
 	let reportid; //게시글 조회하는 회원 아이디 , 비로그인이면 ''
 	let reportpostid; //게시글 작성한 아이디
-	
+	console.log("report.js실행중");
 	//신고하기 버튼 클릭 이벤트
 	$(document).on('click', '.report_btn button', (function () {
 		reportid = $('#userid').val();
-
+		console.log("신고하기 클릭 이벤")
 		//로그인 여부 확인
 		if(reportid == null || reportid == ''){
-			alert("로그인이 필요합니다.");
+			$("#modal_logincheck").show();
 			return;
 		}
 

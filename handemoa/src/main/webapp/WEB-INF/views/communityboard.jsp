@@ -17,13 +17,16 @@
 <!-- 14:15 추가 -->
 <link rel='stylesheet' type='text/css' href='/css/report.css'>
 <link rel='stylesheet' type='text/css' href='/css/communityboard.css'>
-
+<link rel='stylesheet' type='text/css' href='css/bookmark/loginmodal.css'>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
+<link rel='stylesheet' type='text/css' href='css/alarm.css'>
+<script src='/js/alarm.js'></script>
 
 <script type="text/javascript" src='/js/report.js'></script>
+<script type="text/javascript" src='/js/bookmark/loginmodal.js'></script>
 <script src='js/index.js'></script>
 <script type="text/javascript">
 	$(document)
@@ -232,7 +235,7 @@
                     
                     <a href="/profile?nickname=${member.nickname}"><h3 style="text-align: center; color">${member.nickname} 님</h3></a>
                     <div style="display: flex;">
-                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #E02C1B">로그아웃</button>
+                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #ce4764">로그아웃</button>
                     <button id="nav_login_btn" onclick="location.href='/memberedit'" style="color: white; background-color: gray; margin-left: 10px; font-size: 5px;">회원정보수정</button>
                     
                     </div>
@@ -259,6 +262,27 @@
 						<a href="/notice"> <!-- 해당 링크 이동 -->
 							<h4>공지사항</h4></a>
 					</div>
+					
+					
+					<c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -299,33 +323,21 @@
 						<div id="rank_post_list_area_box">
 							<div id="rank_post_list_area">
 								<div id="rank_post_list">
-									<%
-									//치환 변수 선언
-									pageContext.setAttribute("crcn", "\r\n"); //Space, Enter
-									pageContext.setAttribute("br", "<br/>"); //br 태그
-									%>
-									<c:set var="commucontent1" value="${vo.content}" />
-									<!-- commucontent1에 값 저장 -->
-									<c:set var="commucontent2"
-										value="${fn:replace(commucontent1,crcn,br)}" />
-									<!-- commucontent1의 값 중 crcn="\r\n"을 br=<br/>로 치환 -->
-									<!-- commucontent2 값에 치환한 content을 저장 -->
 									<input type="hidden" value="${postnum}" id="getPostnum">
 									<input type="hidden" value="${memberid}" id="post_memberid">
 									<input type="hidden" value="${member.id}" id="userid">
-
 									<div id="commucontent_box">
 										<div class="commupost_top">
 											<div class="commupost_top_item"></div>
-											<div class="commupost_top_item">${vo.nickname}</div>
+											<div class="commupost_top_item"><h3>${vo.nickname}</h3></div>
 											<div class="commupost_top_item">
 												<c:choose>
 													<c:when test="${memberid == member.id}">
 														<button type="button" class="btn_item"
-															style='cursor: pointer;' id="deletepost_btn">삭제</button>
+															style='cursor: pointer;' id="deletepost_btn"><p id="del_update_btn">삭제</p></button>
 														<button type="button" class="btn_item"
 															style='cursor: pointer;' id="updatepost_btn">
-															<a href="/update?postnum=${postnum}">수정</a>
+															<a href="/update?postnum=${postnum}"><p id="del_update_btn">수정</p></a>
 														</button>
 													</c:when>
 													<c:otherwise>
@@ -347,13 +359,20 @@
 											<div class="commupost_title_item">${vo.posttitle}</div>
 										</div>
 										<div class="commupost_content">
-											<div class="commupost_content_item">${commucontent2}</div>
+											<div class="commupost_content_item"><textarea readonly style="width: 960px; height: 430px; font-size: medium; outline: none;">${vo.content}</textarea></div>
 										</div>
 										<div class="commupost_like_dislike">
-											<div class="commupost_like_dislike_item"><a href='javascript:void(0);' id="like_btn">좋아요&nbsp;</a><h3 id="likecount_result">${likecount}</h3></div>
-											<div class="commupost_like_dislike_item"><a href='javascript:void(0);' id="dislike_btn">싫어요&nbsp;</a><h3 id="dislikecount_result">${dislikecount}</h3></div>
+											<div class="commupost_like_dislike_item"></div>
+											<div class="commupost_like_dislike_item">
+											<div class="like_btn_box">
+											<a href='javascript:void(0);' id="like_btn">좋아요&nbsp;<br><h3 id="likecount_result">${likecount}</a></h3>
+											</div>
+											<div class="dislike_btn_box">
+											<a href='javascript:void(0);' id="dislike_btn">싫어요&nbsp;<br><h3 id="dislikecount_result">${dislikecount}</a></h3>
+											</div>
+											</div>
 									    	<div class="report_btn"><button class="reportpostbtn" id="1post${postnum}" style="margin:20px">신고하기</button></div>
-											<div class="commupost_like_dislike_item"><a href='javascript:void(0);' onclick="clip(); return false;">URL 복사</a></div>
+											<div class="commupost_like_dislike_item"><a href='javascript:void(0);' class="urlcopy_btn" onclick="clip(); return false;">URL 복사</a></div>
 										</div>
 
 
@@ -411,7 +430,7 @@
 												<h1>${i}</h1>
 											</div>
 											<div id="rankboard_post_title">
-												<a href="/rankingpost?postnum=${list.postnum}">
+												<a href="/communitypost?postnum=${list.postnum}">
 													${list.posttitle} </a>
 											</div>
 										</div>
@@ -473,6 +492,7 @@
 		</div>
 
 	</div>
+	<%@ include file="/WEB-INF/views/bookmark/loginmodal.jsp" %>  
 </body>
 </html>
 

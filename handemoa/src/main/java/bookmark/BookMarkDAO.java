@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository("bookMarkDAO")
 public interface BookMarkDAO {
-	
+	//북마크 있는 회원인지 확인
+	public int nullCheckbookMark(String memberid);
 	//북마크 조회
 	public List<BookMarkJoinDTO> bookMarkList(Map<String, Object> searchdetail);
 	public int bookMarkRows(Map<String, Object> searchdetail);

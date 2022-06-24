@@ -24,40 +24,63 @@
 	
 	<!-- 조건별 게시글 조회 -->
 	<select id="searchPost" resultType="searchpostjoindto" parameterType="hashmap">
-		select * from searchpostjoin
-		<where>					
+		select p.divisioncode, p.postnum, c.catename, c.catedetailcode,
+		p.posttitle, DATE_FORMAT(p.regdate,'%Y-%m-%d') as regdate, classtitle,
+		thumbnail, likecount, dislikecount, viewcount, author, m.nickname
+		from
+		division as d inner join post as p
+		on d.divisioncode = p.divisioncode
+		inner join category as c
+		on c.catedetailcode = p.catedetailcode
+		inner join member as m
+		on p.memberid = m.id
+		<where>
+			p.tempsave = 1 and p.history = 0					
 			<if test="catename != '전체검색'">
-			 	catename = #{catename}
+			 	and catename = #{catename}
 			</if>
 			<if test="catedetailcode != 0">
-				and catedetailcode = #{catedetailcode}
+				and p.catedetailcode = #{catedetailcode}
 			</if>
 			<if test="searchtxt != ''">
 				and posttitle like CONCAT('%', #{searchtxt}, '%')
 			</if>
 			<if test="divisioncode != 0">
-				and divisioncode = #{divisioncode}
+				and p.divisioncode = #{divisioncode}
 			</if>
 		</where> 
 		order by postnum limit #{pagestartrow}, #{limitrows}
 	</select>
 	<!-- 조건별 게시글 조회 -->
 	<select id="searchPostRows" resultType="int" parameterType="hashmap">
-		select count(*) from searchpostjoin
-		<where>					
+		select count(*)
+		from
+		(select p.divisioncode, p.postnum, c.catename, c.catedetailcode,
+		p.posttitle, DATE_FORMAT(p.regdate,'%Y-%m-%d') as regdate, classtitle,
+		thumbnail, likecount, dislikecount, viewcount, author, m.nickname
+		from
+		division as d inner join post as p
+		on d.divisioncode = p.divisioncode
+		inner join category as c
+		on c.catedetailcode = p.catedetailcode
+		inner join member as m
+		on p.memberid = m.id
+		<where>
+			p.tempsave = 1 and p.history = 0					
 			<if test="catename != '전체검색'">
-			 	catename = #{catename}
+			 	and catename = #{catename}
 			</if>
 			<if test="catedetailcode != 0">
-				and catedetailcode = #{catedetailcode}
+				and p.catedetailcode = #{catedetailcode}
 			</if>
 			<if test="searchtxt != ''">
 				and posttitle like CONCAT('%', #{searchtxt}, '%')
 			</if>
 			<if test="divisioncode != 0">
-				and divisioncode = #{divisioncode}
+				and p.divisioncode = #{divisioncode}
 			</if>
-		</where> 
+		</where>
+		) r 
 	</select>
 </mapper>
 

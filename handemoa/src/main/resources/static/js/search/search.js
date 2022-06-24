@@ -35,13 +35,7 @@
 	$('#search_catename').val(catename).prop('selected', true);
 
 	setcatedetail();	
-	
-	let catedetailcode = searchParams.get("catedetailcode");
-//	console.log("catedetailcode :" + catedetailcode);
-	if(catedetailcode == null) {catedetailcode = 0;}
-	$('#search_catedetailname').val(catedetailcode).prop('selected', true);
-//	console.log("parameter catedetailcode : " + catedetailcode);
-	
+
 	let searchtxt = searchParams.get("searchtxt");
 	$('#searchtxt').val(searchtxt);	
 	

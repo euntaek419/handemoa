@@ -33,12 +33,12 @@ public class AdminCommentController {
 		return searchComment(0, 1, 0, "");
 	}
 	
-	//게시글 신고 분류별 조회
+	//댓글 분류별 조회
 	@RequestMapping("/admincomment/search")
 	public ModelAndView searchComment(int divisioncode, int currentpage, int search, String searchtxt) {
 		
 		//divisioncode 0 전체 검색, 1 커뮤니티, 2 강의랭킹
-		//search 0 전체 검색, 1 댓글번호, 2 글번호, 3 댓글내용, 4 닉네임
+		//search 0 전체 검색, 1 댓글번호, 2 댓글내용, 3 닉네임
 		//searchtxt 검색 text입력 값		
 
 		//페이징
@@ -66,7 +66,7 @@ public class AdminCommentController {
 		return mv;
 	}
 	
-	//댓글 신고 삭제
+	//댓글 삭제
 	@ResponseBody
 	@RequestMapping("/admincomment/delete")
 	public int deleteComment(@RequestParam("commentnums[]" ) List<Integer> commentnums) {

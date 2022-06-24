@@ -75,9 +75,13 @@ public class AdminMemberController {
 		@ResponseBody
 		@RequestMapping(value = "/memberquitselect", method = RequestMethod.POST)
 		public String quitselect(HttpServletRequest request) {
-			
+				
 			String[] ajaxMsg = request.getParameterValues("valueArr");
 			for(int i=0;i<ajaxMsg.length;i++) {
+				service.updatepost(ajaxMsg[i]);
+				service.updatecomment(ajaxMsg[i]);
+				service.updatecommentreport(ajaxMsg[i]);
+				service.updatepostreport(ajaxMsg[i]);
 				service.quitselect(ajaxMsg[i]);
 			}
 			return "redirect: adminmember";

@@ -15,6 +15,11 @@ public class BookMarkServiceImpl implements BookMarkService{
 	BookMarkDAO dao;
 
 	@Override
+	public int nullCheckbookMark(String memberid) {
+		return dao.nullCheckbookMark(memberid);
+	}
+	
+	@Override
 	public List<BookMarkJoinDTO> bookMarkList(Map<String, Object> searchdetail) {
 		return dao.bookMarkList(searchdetail);
 	}
@@ -39,7 +44,4 @@ public class BookMarkServiceImpl implements BookMarkService{
 		return dao.deleteBookMark(dto);
 	}
 
-
-
-	
 }

@@ -42,4 +42,10 @@ public interface RankPostDAO {
 	public int countlikepost(int postnum, int likestatus);
 	
 	public void rankingViewCountUp(int postnum);
+	
+	public int insertAlarm(AlarmDTO alarm);
+	
+	public List<AlarmDTO> alarmList(String id);
+	public int alarmRead(int alarmnum);
+	public int deleteAllAlarm(String id);
 }

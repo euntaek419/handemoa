@@ -265,7 +265,7 @@ $(document).on('change', '#post_type', function(e){
 							<div class="adminmember_check_container">
 								<div class="adminmember_container">
 									<div class="notice_item" >${dto.regdate}</div>
-									<div class="notice_item" >${dto.title}</div>
+									<div class="notice_item" ><a href="/adminnoticenum?noticenum=${dto.noticenum}" target="_blank">${dto.title}</a></div>
 									<div class="notice_item" >운영자</div>
 								</div>
 							</div>

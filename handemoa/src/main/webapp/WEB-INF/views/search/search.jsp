@@ -15,6 +15,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel='stylesheet' type='text/css' href='/css/index.css'>
 <link rel='stylesheet' type='text/css' href='/css/search/search.css'>
+<link rel='stylesheet' type='text/css' href='css/alarm.css'>
+<script src='/js/alarm.js'></script>
 <script src='/js/index.js'></script>
 <script type="text/javascript" src='/js/search/search.js'></script>
 </head>
@@ -74,6 +76,28 @@
 						<a href="/notice"> <!-- 해당 링크 이동 -->
 							<h4>공지사항</h4></a>
 					</div>
+					
+					
+					
+					<c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
         </div>
@@ -93,10 +117,10 @@
             	<div id="inner_space"></div>
                 <div id="search_content">
 					<!-- 컨텐츠 넣어주세요! -->
-
+					<div id="search_content_box">
 					<!-- 페이지 제목 -->
 					<div class="content_title">
-						<div class="title_bar"><h2>전체 게시글 통합 검색</h2></div>
+						<h2>전체 게시글 통합 검색</h2>
 					</div>
 					<!-- 상세 검색 버튼-->
 					<div class="content_head">
@@ -142,8 +166,8 @@
 							<p>'${searchdetail.searchtxt}'에 대한 검색 결과가 없습니다.</p>
 						</c:if>
 						<c:forEach var="post" items="${searchPostList}" varStatus="i">
-							<!--커뮤니티 게시글-->
 							<c:if test="${post.divisioncode == 1}">
+							<!--커뮤니티 게시글-->
 								<div class="community_list_body">
 									<div class="list_item">
 										<div class="post_row">
@@ -159,8 +183,8 @@
 								</div>
 
 							</c:if>
-							<!--강의랭킹 게시글-->
 							<c:if test="${post.divisioncode == 2}">
+							<!--강의랭킹 게시글-->
 								<div class="ranking_list_body">
 									<div class="list_item">
 										<div class="ranking_thumbnail"><img class="thumbnail_img" src="/css/images/${post.thumbnail}"></div>
@@ -210,7 +234,9 @@
 								</div>
 							</c:if>						
 							<c:if test="${pagedto.beginPage == 0}">	
-								<a class="false"></a>
+								<div class="page">
+									<a class="false">0</a>
+								</div>
 							</c:if>					
 						</c:forEach>
 							
@@ -233,7 +259,7 @@
 							</div>
 						</div>						
 					</div> <!-- 페이지번호 end-->
-					
+					</div> <!-- search_content_box end -->
                 </div> <!-- div content end -->     
 
             </div><!--content_container_space end -->

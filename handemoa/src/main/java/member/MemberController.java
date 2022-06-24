@@ -111,18 +111,22 @@ public class MemberController {
 			HttpServletResponse response) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		MemberDTO logindto = service.login(dto);
+		
 		if (logindto != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", logindto);
 			session.setAttribute("isLogOn", true);
-
-			mv.setViewName("redirect:/handemoa");
+			
+			mv.setViewName("redirect:/handemoa");		
+			
 		} else {
 			rAttr.addAttribute("result", "loginFailed");
 			mv.setViewName("redirect:/login");
 		}
 		return mv;
 	}
+	
+	
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -147,7 +151,7 @@ public class MemberController {
 	  
 		@RequestMapping(value = "/memberedit", method = RequestMethod.POST)
 
-		public String membereditresult(MemberDTO dto) throws Exception {
+		public String membereditresult(HttpServletRequest request ,MemberDTO dto) throws Exception {
 			int result = service.memberedit(dto);
 			System.out.println(dto.id);
 			System.out.println(dto.intro);
@@ -155,6 +159,11 @@ public class MemberController {
 			System.out.println(dto.password);
 			System.out.println(dto.phone);
 			System.out.println(result);
+			
+			HttpSession session = request.getSession();
+			session.removeAttribute("member");
+			session.removeAttribute("isLogOn");
+			
 			return "redirect:/handemoa";
 		}
 	 
@@ -182,10 +191,9 @@ public String uploadresult(MultipartFile profileimgadd, Model model) throws IOEx
 	System.out.println("isEmpty:"+mf1.isEmpty()); //파일선택여부
 
 	// 파일내용+파일명--> 서버 c:/upload 폴더 영구 저장
-	String rootPath = System.getProperty("user.dir");
-	String savePath = rootPath+"/src/main/resources/static/css/images/";
+	String savePath = "src\\main\\resources\\static\\css\\images\\";
 
-	
+
 	if(!mf1.isEmpty()) {
 		//원래파일명
 		String originname1 = mf1.getOriginalFilename();
@@ -205,6 +213,25 @@ public String uploadresult(MultipartFile profileimgadd, Model model) throws IOEx
 	return profileimgName;
 }
 
-
+@RequestMapping(value = "/header", method = RequestMethod.GET)
+public String header() throws Exception {
+	return "/header";
 }
 
+@ResponseBody
+@RequestMapping(value = "/idfind", method = RequestMethod.POST)
+public String idfind(MemberDTO dto) throws Exception {
+	String idfindresult = service.idfind(dto);
+	System.out.println("=====================idresult" + idfindresult);
+	return idfindresult;
+}
+
+@ResponseBody
+@RequestMapping(value = "/pwfind", method = RequestMethod.POST)
+public String pwfind(MemberDTO dto) throws Exception {
+	String pwfindresult = service.pwfind(dto);
+	System.out.println("=====================passwordresult" + pwfindresult);
+	return pwfindresult;
+}
+
+}

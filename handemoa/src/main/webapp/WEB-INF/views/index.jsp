@@ -14,8 +14,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel='stylesheet' type='text/css' href='css/index.css'>
 <link rel='stylesheet' type='text/css' href='css/mainindex.css'>
-    
 <script src="/jquery-3.6.0.min.js"></script>
+<link rel='stylesheet' type='text/css' href='css/alarm.css'>
+<script src='/js/alarm.js'></script>
 <script src='/js/index.js'></script>
 <script type="text/javascript">
 
@@ -23,10 +24,10 @@
 function setcatedetail(){
 	let catename = $('#search_catename option:selected').text();
 	//세부카테고리초기화
-	$('#search_catedetailname').html('<option value="0">전체검색</option>');
+	$('#search_catedetailname').html('<option value="0">검색</option>');
 	//부분 카테고리에 해당하는 세부카테고리 조회
 	$.ajax({
-		url: "/search2",
+		url: "/maincategory",
 		data: { 'catename': catename },
 		type: 'post',
 		dataType: 'json',
@@ -43,7 +44,7 @@ $(window).on('load', (function(){
 	//페이지 새로 고침 후 선택했던 카테고리 유지
 	const searchParams = new URLSearchParams(location.search);
 	let catename = searchParams.get("catename");
-	if(catename == null) {catename = '전체검색';}
+	if(catename == null) {catename = '검색';}
 	$('#search_catename').val(catename).prop('selected', true);
 
 	setcatedetail();	
@@ -61,10 +62,27 @@ $(window).on('load', (function(){
 	$(document).on('click', '#search_btn', (function () {
 		let catename = $('#search_catename option:selected').val();
 		let catedetailcode = $('#search_catedetailname option:selected').val();
-		$('#test').html("catename - " + catename + "catedetailcode - " + catedetailcode);
+		
+		$.ajax({
+			type: "get",
+			url: "/mainranking",
+			data: { 'catedetailcode': catedetailcode },
+			type: 'post',
+			dataType: 'json',
+			success: function (response) {
+				console.log("rankboard 새로고침");
+                $('.rankboard_list_box').remove();
+                for (var i in response) {
+                    console.log(response[i].classtitle);
+                    var rankBoardList = $('<div class="rankboard_list_box"><div class="rankboard_list_number"><h1>'+(Number(i)+1)+'</h1></div><div class="rankboard_list_inner"><a href="/rankingpost?postnum='+response[i].postnum+'"><div id="rankboard_post_title" >'+response[i].posttitle+'</div></a><div id="rankboard_post_detail">'+response[i].author+' - '+response[i].classtitle+'</div></div></div>');
+                    $('#rankboard_list').append(rankBoardList);
+                } 
+			}
+		});	
 		
 	}));
-
+	
+	
 </script>
 
 
@@ -97,7 +115,7 @@ $(window).on('load', (function(){
                     
                     <a href="/profile?nickname=${member.nickname}"><h3 style="text-align: center; color">${member.nickname} 님</h3></a>
                     <div style="display: flex;">
-                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #E02C1B">로그아웃</button>
+                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #ce4764;">로그아웃</button>
                     <button id="nav_login_btn" onclick="location.href='/memberedit'" style="color: white; background-color: gray; margin-left: 10px; font-size: 5px;">회원정보수정</button>
                     
                     </div>
@@ -113,7 +131,7 @@ $(window).on('load', (function(){
                             <h4>북마크</h4></a>
                     </div>
                     <div class="nav_list_area">
-                        <a href="/ranking?catedetailcode=10&page=1"> <!-- 해당 링크 이동 -->
+                        <a href="/ranking?catedetailcode=8&page=1"> <!-- 해당 링크 이동 -->
                             <h4>강의랭킹</h4></a>
                     </div>
                     <div class="nav_list_area">
@@ -124,20 +142,42 @@ $(window).on('load', (function(){
                         <a href="/notice"> <!-- 해당 링크 이동 -->
                             <h4>공지사항</h4></a>
                     </div>
-                </div>
+
+					<c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
+
+
+				</div>
             </div>
         </div>
         <!-- 네비게이션 end -->
         <div id="content_container">
             <div id="content_container_space">
                 <div id="search_area">
-	                <div id="intro_inner_space">
-	                	<div id="intro_box">
-		                	<div id="intro_main">흩어진 지식을 지금 여기,</div>
-		                	<div id="intro_main">한데 모아!</div>
-	                	</div>
-	 	               	<div id="intro_box">한 눈에 볼 수 있는 카테고리별 자료추천 랭킹 서비스 커뮤니티</div>
-	                </div>
+<!-- 	                <div id="intro_inner_space"> -->
+<!-- 	                	<div id="intro_box"> -->
+<!-- 		                	<div id="intro_main">흩어진 지식을 지금 여기,</div> -->
+<!-- 		                	<div id="intro_main">한데 모아!</div> -->
+<!-- 	                	</div> -->
+<!-- 	 	               	<div id="intro_box">한 눈에 볼 수 있는 카테고리별 자료추천 랭킹 서비스 커뮤니티</div> -->
+<!-- 	                </div> -->
 	                
                     <div id="search_box">
                         <input id="search" placeholder="게시글 통합 검색" type="search"/>
@@ -148,7 +188,7 @@ $(window).on('load', (function(){
                     <div id="search_box_space"></div>
                 
                 </div>
-                <hr>
+<!--                 <hr> -->
                 
                 <div id="all_content_area">
                 <div id="all_content">
@@ -158,28 +198,30 @@ $(window).on('load', (function(){
 							<div class="index_name">
 	                            <h2>RANKING</h2>
 	                    	</div>
-
+	                    	
+	                    	
+							<div class= "select_area">
 							<div class="content_head_item">
-								부분카테고리 <select id="search_catename" name="search_catename">
-									<option value="전체검색">전체검색</option>
+								TITLE <select id="search_catename" name="search_catename">
+									<option value="검색">검색</option>
 									<c:forEach var="name" items="${catename}" varStatus="i">
 										<option value="${name}">${name}</option>
 									</c:forEach>
 								</select>
 							</div>
 							<div class="content_head_item">
-								세부카테고리 <select id="search_catedetailname"
+								DETAIL <select id="search_catedetailname"
 									name="search_catedetailname">
-									<option value="0">전체검색</option>
+									<option value="0">검색</option>
 									<c:forEach var="cate" items="${cateAll}" varStatus="i">
 										<option value="${cate.catedetailcode}">${cate.catedetailname}</option>
 									</c:forEach>
 								</select>
 							</div>
 							<div class="content_head_item">
-								<img id="search_btn" src="/css/images/search_icon.png" />
+								<img id="search_btn" src="/css/images/search_icon.png" style="cursor:pointer"/>
 							</div>
-							<div id = "test"></div>
+							</div>
 
 
 
@@ -190,32 +232,15 @@ $(window).on('load', (function(){
                             <div class="inner_space"></div>
                             <div id="rankboard_list">
                                 <!-- 반복할 게시물 시작 -->
-                                <c:forEach items="${ rankingboard }" var="list" >
-                                <c:set var="i" value="${i+1}"/>
-                                <div class="rankboard_list_box">
-                                    <div class="rankboard_list_number">
-                                        <h1>${i}</h1>
-                                    </div>
-                                    <div class="rankboard_list_inner">
-                                        <div id="rankboard_post_title">
-                                        	<a href="/rankingpost?postnum=${list.postnum}" >
-                                           		 ${list.posttitle}
-                                            </a>
-                                        </div>
-                                        <div id="rankboard_post_detail">
-                                        	${list.author} - ${list.classtitle}
-                                        </div>	
-                                    </div>
-                                </div>
-                                </c:forEach>
+ 
                                 <!-- 반복할 게시물 종료 -->
                             </div>
                         </div>
                         </div>
 								
 							<div id="button_area">
-								<a href="/ranking?catedetailcode=10&page=1">
-								<div id="all_select">전체보기</div>
+								<a href="/ranking?catedetailcode=10&page=1" id="all_select">
+									전체보기
 								</a>
 							</div>
 		         	</div>
@@ -252,8 +277,8 @@ $(window).on('load', (function(){
 												<c:if test="${dto.divisioncode == 2}">강의랭킹</c:if>
 											</div>
 											<div class="post_item" >${dto.regdate}</div>
-											<div class="post_item" ><a href="/profile?nickname=${dto.nickname}" target="_blank">${dto.nickname}</a></div>
-											<div class="post_item" >${dto.posttitle}</div>
+											<div class="post_item" ><a href="/profile?nickname=${dto.nickname}">${dto.nickname}</a></div>
+											<div class="post_item" ><a href="/communitypost?postnum=${dto.postnum}">${dto.posttitle}</a></div>
 											<div class="post_item" >${dto.viewcount}</div>
 										</div>
 									</div>
@@ -261,8 +286,8 @@ $(window).on('load', (function(){
 							</div>
 							
 							<div id="button_area">
-							<a href="/community?catedetailcode=8&page=1">
-								<div id="all_select">전체보기</div>
+							<a href="/community?catedetailcode=8&page=1" id="all_select">
+								전체보기
 							</a>	
 							</div>
 			         </div>
@@ -288,15 +313,15 @@ $(window).on('load', (function(){
 									<div class="adminmember_check_container">
 										<div class="adminmember_container">
 											<div class="notice_item" >${dto.regdate}</div>
-											<div class="notice_item" >${dto.title}</div>
+											<div class="notice_item" ><a href="noticenum?noticenum=${dto.noticenum}">${dto.title}</a></div>
 											<div class="notice_item" >운영자</div>
 										</div>
 									</div>
 								</c:forEach>
 							</div>
 								<div id="button_area">
-								<a href="/notice">
-									<div id="all_select">전체보기</div>
+								<a href="/notice" id="all_select">
+									전체보기
 								</a>	
 								</div>
 			         </div>	         	                         

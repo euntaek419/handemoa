@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+h3{
+	margin: 10px auto 0 auto;
+}
 #search_content {
     width: 100%;
     height: 1000px;
@@ -7,21 +10,19 @@
     background-color: white;
     margin-bottom: 40px;
 }
-
-h3{
-	margin: 10px auto 0 auto;
+#search_content_box{
+	padding:10px 30px 30px 30px;
 }
 
 /*페이지 제목*/
 .content_title{
-	display: flex;
+	padding: 10px;
+    display: flex;
+    align-items: center;
     font-size: 20px;
     font-weight: bold;
 }
-.title_bar{
-    flex-grow: 1;
-    margin: 10px 20px;
-}
+
 /*글분류 검색*/
 .content_head{
 	display:flex;
@@ -83,7 +84,7 @@ button:hover {
 #post_list{
 	padding:20px;
 	padding-top: 0px;
-	height: 810px;
+	height: 800px;
 }
 
 .community_list_body, .ranking_list_body{
@@ -99,17 +100,28 @@ button:hover {
 }
 .list_item{
 	padding:7px;
+	flex-direction: column;
 }
 .post_row{
-	display:inline-flex;
+	display:flex;
 	width:100%;
 	margin:1px;
 }
 .post_row > .post_item{
 	margin-right: 15px;
 }
+.post_row:first-child > .post_item:first-child{
+	width:100px;
+}
+.post_item:nth-child(2), .post_item:nth-child(3){
+	padding-right:7px;
+	white-space: nowrap;
+  	overflow: hidden;
+    text-overflow: ellipsis;  /*말줄임 적용*/
+    width:400px;
+}
 .post_item_title{
-	width:90%;
+	width:100%;
 	font-size:20px;
 	font-weight: bold;
 	white-space: nowrap;

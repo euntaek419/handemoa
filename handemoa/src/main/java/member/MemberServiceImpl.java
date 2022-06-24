@@ -39,15 +39,12 @@ public class MemberServiceImpl implements MemberService {
 		return dao.checkmember_phone(phone);
 	}
 	
-	//trim 문자열을 제거하는 함수 ==???
-	
 	@Override
 	public MemberDTO login(MemberDTO memberdto) {
 		return dao.login(memberdto);
 	}
 	
-	
-	
+
 	public int memberquit(String status) {
 		return dao.memberquit(status);
 	}
@@ -56,6 +53,16 @@ public class MemberServiceImpl implements MemberService {
 	
 	public int memberedit(MemberDTO dto) {
 		return dao.memberedit(dto);
+	}
+	
+	@Override
+	public String idfind(MemberDTO dto) {
+		return dao.idfind(dto);
+	}
+	
+	@Override
+	public String pwfind(MemberDTO dto) {
+		return dao.pwfind(dto);
 	}
 	 
 	 

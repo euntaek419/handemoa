@@ -15,11 +15,14 @@
 	}
 	$('.pagenum').eq(page).css("color", "rgb(77, 77, 255)");
 	
+	let searchtxt = searchParams.get("searchtxt");
+	$('#bookmark_searchdetail').val(searchtxt);
+	
 })); //on ready
 
  	//분류별 검색 버튼 클릭
 	$(document).on('click', '#search_btn', (function () {
-		let searchtxt = $('#comment_searchdetail').val();
+		let searchtxt = $('#bookmark_searchdetail').val();
 		location.href = '/bookmarkview?currentpage=1&searchtxt='+ searchtxt;
 	}));
 	

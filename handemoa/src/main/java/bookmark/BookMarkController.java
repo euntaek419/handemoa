@@ -44,9 +44,15 @@ public class BookMarkController {
 	
 	@RequestMapping("/bookmarkview")
 	public ModelAndView bookmark(HttpServletRequest request, int currentpage, String searchtxt) {
+		ModelAndView mv = new ModelAndView();		
 		HttpSession session = request.getSession();
 		MemberDTO logindto = (MemberDTO) session.getAttribute("member");
-		
+
+		//북마크 있는 회원인지 확인
+		int checkNull = service.nullCheckbookMark(logindto.getId());
+		if(checkNull == 0) {
+			mv.addObject("checkNull", checkNull);
+		}
 		//페이징
 		int pageStartRow = limitRows * ( currentpage - 1);
 		
@@ -61,7 +67,6 @@ public class BookMarkController {
 		int bookMarkRows = service.bookMarkRows(searchdetail);					
 		ViewPageDTO pagedto = new ViewPageDTO(limitRows, limitPage, currentpage, bookMarkRows);
 
-		ModelAndView mv = new ModelAndView();		
 		mv.addObject("searchdetail", searchdetail);
 		mv.addObject("pagedto", pagedto);
 		mv.addObject("bookMarkList", bookMarkList);

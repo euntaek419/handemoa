@@ -7,9 +7,11 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>한데모아 - Ranking</title>
+    <link rel='stylesheet' type='text/css' href='css/index.css'>
     <link rel='stylesheet' type='text/css' href='css/report.css'>
     <link rel='stylesheet' type='text/css' href='css/ranking.css'>
     <link rel='stylesheet' type='text/css' href='css/bookmark/bookmarkcheck.css'>
+    <link rel='stylesheet' type='text/css' href='css/bookmark/loginmodal.css'>
     <!-- 노토산스 폰트 시작-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +20,10 @@
     <script src="/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src='/js/report.js'></script>
     <script type="text/javascript" src='/js/bookmark/bookmarkcheck.js'></script>
+    <script type="text/javascript" src='/js/bookmark/loginmodal.js'></script>
     <script src='/js/index.js'></script>
+    <link rel='stylesheet' type='text/css' href='css/alarm.css'>
+    <script src='/js/alarm.js'></script>
     <script>
     $(document).ready(function () {
 
@@ -69,7 +74,8 @@
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             data: { 'postnum': $('#comment_postnum').val(),
                     'memberid': $('#comment_memberid').val(),
-                    'commentcontent': $('#commentcontent').val()},
+                    'commentcontent': $('#commentcontent').val(),
+                    'postmemberid': $('#post_memberid').val()},
             success: function (a) {
                 if (a == 1) {
                     alert("댓글이 작성되었습니다.");
@@ -217,7 +223,7 @@
                     
                     <a href="/profile?nickname=${member.nickname}"><h3 style="text-align: center; color">${member.nickname} 님</h3></a>
                     <div style="display: flex;">
-                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #E02C1B">로그아웃</button>
+                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #ce4764;">로그아웃</button>
                     <button id="nav_login_btn" onclick="location.href='/memberedit'" style="color: white; background-color: gray; margin-left: 10px; font-size: 5px;">회원정보수정</button>
                     
                     </div>
@@ -244,6 +250,28 @@
                         <a href="/notice"> <!-- 해당 링크 이동 -->
                             <h4>공지사항</h4></a>
                     </div>
+                    
+                    
+                    
+                    <c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
         </div>
@@ -444,22 +472,7 @@
 							</div>
 						</div>
 					</div>
-					 <!-- 비로그인시 모달창 -->               
-		               <div id="modal_bookmarkcheck">
-		                  <div class="modal_bookmarkcheck_layer">
-		                     <div class="modal_bookmarkcheck_content">
-		                        <div class="modal_bookmarkcheck_title">
-		                           <h3>로그인 회원만 이용이 가능합니다.</h3>
-		                           <h3>로그인하시겠습니까?</h3>
-		                        </div>
-		                        <div class="modal_bookmarkcheck_btn">
-		                           <button type="button" id="modal_bookmarkcheck_ok_btn">네</button>
-		                           <button type="button" id="modal_bookmarkcheck_close_btn">아니요</button>
-		                        </div>                        
-		                     </div>
-		                  </div>
-		               </div>
-		               
+					<%@ include file="/WEB-INF/views/bookmark/loginmodal.jsp" %>   		               
 		               
                 </div>
 					<div class="post_space"></div>

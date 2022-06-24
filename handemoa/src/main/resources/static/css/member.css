@@ -3,102 +3,36 @@
     width: 100%;
     height: 800px;
     background-color: white;
-    margin-bottom: 40px;
+    border-radius: 15px;
+
 } 
 
-#member_cssbox{
+#content{
+	margin-top:45px;
+}
+
+#member_cssbox {
 	padding:8px;
 	display:flex;	
-	}
+}
 
+#content_container{
+	height: 937px;
+}
+
+
+	
 .item{
 	flex:1;
 }
 
 .item:nth-child(1){
-width: 500px;
+width: 600px;
 }
 
 .item:nth-child(2){
-	width: 500px;
+	width: 600px;
 	margin-top: 500px;
-}
-
-/*중복확인*/
-#repeat_check {
-	margin: auto 0 auto;
-	margin-left:20px;
-    width: 70px;
-    height: 30px;
-    border: none;
-    border-radius: 25px;
-    color: black;
-    background: #bdbdbd;
-}
-
-#repeat_check:hover {
-	border-radius: 10px;
-    transition: 0.5s;
-    color: white;
-    background: #12379e;
-	
-}
-
-#repeat_check_nickname {
-	margin: auto 0 auto;
-	margin-left:20px;
-    width: 70px;
-    height: 30px;
-    border: none;
-    border-radius: 25px;
-    color: black;
-    background: #bdbdbd;
-}
-
-#repeat_check_nickname:hover {
-	border-radius: 10px;
-    transition: 0.5s;
-    color: white;
-    background: #12379e;
-	
-}
-
-#repeat_check_email {
-	margin: auto 0 auto;
-	margin-left:20px;
-    width: 70px;
-    height: 30px;
-    border: none;
-    border-radius: 25px;
-    color: black;
-    background: #bdbdbd;
-}
-
-#repeat_check_email:hover {
-	border-radius: 10px;
-    transition: 0.5s;
-    color: white;
-    background: #12379e;
-	
-}
-
-#repeat_check_phone {
-	margin: auto 0 auto;
-	margin-left:20px;
-    width: 70px;
-    height: 30px;
-    border: none;
-    border-radius: 25px;
-    color: black;
-    background: #bdbdbd;
-}
-
-#repeat_check_phone:hover {
-	border-radius: 10px;
-    transition: 0.5s;
-    color: white;
-    background: #12379e;
-	
 }
 
 /* 아이디 */
@@ -106,6 +40,7 @@ width: 500px;
 	display: flex;
 	justify-content: center;
 	margin-top: 60px;
+	margin-right : 90px;
 }
 
 #id_box {
@@ -136,6 +71,7 @@ width: 500px;
 #nickname {
 	display: flex;
 	justify-content: center;
+	margin-right: 90px;
 }
 
 #nickname_box {
@@ -229,10 +165,11 @@ width: 500px;
 #email {
 	display: flex;
 	justify-content: center;
+	margin-right: 90px;
 }
 
 #email_box {
-    width: 300px;
+    width: 190px;
     height: 30px;
     border-radius: 10px;
     background-color: white;
@@ -242,10 +179,11 @@ width: 500px;
     text-align: center; 
     display: flex;
     justify-content: center;
+    
 }
 
 #email_email { 
-    width: 300px;
+    width: 190px;
     height: 30px;
     margin-left: 10px;
     border: none;
@@ -254,11 +192,54 @@ width: 500px;
     
 }
 
+#emailcode_div{
+	display: flex;
+	justify-content: center;
+}
+
+#emailCode_box {
+    width: 190px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: white;
+    align-self: center;
+    box-shadow: 0px 0px 4px rgb(209, 209, 209);
+    border: none;
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+
+#emailCode{
+	width: 100px;
+    height: 30px;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    
+}
+
+#emailtime{
+	width: 80px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 15px;
+    color: red;
+    margin-top:5px;
+}
+
 /* 전화번호 */
 
 #phone {
 	display: flex;
 	justify-content: center;
+	margin-right: 90px;
 }
 
 #phone_box {
@@ -289,6 +270,7 @@ width: 500px;
 #birth {
 	display: flex;
 	justify-content: center;
+	
 }
 
 
@@ -335,7 +317,6 @@ width: 500px;
     outline: none;
     background-color: transparent;
     
-    
 }
 
 
@@ -357,4 +338,119 @@ width: 500px;
     background: #12379e;
 	
 }
+
+#emailCheck {
+	margin: auto 0 auto;
+    width: 90px;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+    margin-left: 20px;
+}
+
+#emailCheck:hover {
+	border-radius: 10px;
+    transition: 0.5s;
+    color: white;
+    background: #12379e;
+	
+}
+
+#request {
+	margin: auto 0 auto;
+    width: 90px;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+    margin-left:20px;
+}
+
+#request:hover {
+	border-radius: 10px;
+    transition: 0.5s;
+    color: white;
+    background: #12379e;
+	
+}
+/* 중복확인 버튼 */
+/*
+#repeat_check {
+	margin: auto 0 auto;
+	margin-left:20px;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+}
+
+#repeat_check:hover {
+	border-radius: 10px;
+    transition: 0.5s;
+    color: white;
+    background: #12379e;
+	
+}
+
+#repeat_check_nickname {
+	margin: auto 0 auto;
+	margin-left:20px;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+}
+
+#repeat_check_nickname:hover {
+	border-radius: 10px;
+    transition: 0.5s;
+    color: white;
+    background: #12379e;
+	
+}
+
+#repeat_check_email {
+	margin: auto 0 auto;
+	margin-left:20px;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+}
+
+#repeat_check_email:hover {
+	border-radius: 10px;
+    transition: 0.5s;
+    color: white;
+    background: #12379e;
+	
+}
+
+#repeat_check_phone {
+	margin: auto 0 auto;
+	margin-left:20px;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+}
+
+#repeat_check_phone:hover {
+	border-radius: 10px;
+    transition: 0.5s;
+    color: white;
+    background: #12379e;
+	
+} */
 

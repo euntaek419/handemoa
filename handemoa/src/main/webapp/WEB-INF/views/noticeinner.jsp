@@ -17,6 +17,8 @@
 <link rel='stylesheet' type='text/css' href='css/notice.css'>
 <link rel='stylesheet' type='text/css' href='css/noticeinner.css'>
 <script src="/jquery-3.6.0.min.js"></script>
+<link rel='stylesheet' type='text/css' href='css/alarm.css'>
+<script src='/js/alarm.js'></script>
 <script src='/js/index.js'></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -54,7 +56,7 @@
                     
                     <a href="/profile?nickname=${member.nickname}"><h3 style="text-align: center; color">${member.nickname} 님</h3></a>
                     <div style="display: flex;">
-                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #E02C1B">로그아웃</button>
+                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #ce4764;">로그아웃</button>
                     <button id="nav_login_btn" onclick="location.href='/memberedit'" style="color: white; background-color: gray; margin-left: 10px; font-size: 5px;">회원정보수정</button>
                     
                     </div>
@@ -81,6 +83,27 @@
                         <a href="/notice"> <!-- 해당 링크 이동 -->
                             <h4>공지사항</h4></a>
                     </div>
+                    
+                    
+                    <c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
         </div>

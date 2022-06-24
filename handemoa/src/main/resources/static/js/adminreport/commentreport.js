@@ -3,10 +3,13 @@
  */ 
  
  	//분류별 검색 버튼 클릭
-	$(document).on('click', '#division_btn', (function () {
+	$(document).on('click', '#search_btn', (function () {
 		//console.log($('#divisioncode option:selected').val());
-		var division = $('#divisioncode option:selected').val();
-		location.href = '/admincommentreport/division?divisioncode=' + division + '&currentpage=1';	
+		let division = $('#divisioncode option:selected').val();
+		let search = $('#search_select option:selected').val();
+		let searchtxt = $('#searchdetail').val();
+		
+		location.href = '/admincommentreport/search?divisioncode=' + division + '&currentpage=1' + '&search=' + search + '&searchtxt=' + searchtxt;;	
 	}));
 
 	//삭제 창 확인 버튼

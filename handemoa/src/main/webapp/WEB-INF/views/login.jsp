@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -15,22 +16,29 @@
 	<c:when test="${result=='loginFailed'}">
 		<script>
                     window.onload=function(){
-                    	alert("아이디나 비밀번호가 틀립니다. 다시 로그인 하세요!");
+                    	alert("아이디 또는 비밀번호를 다시 확인해주세요!");
                     }
                     </script>
 	</c:when>
 </c:choose>
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 
 <link rel='stylesheet' type='text/css' href='/css/login.css'>
 <link rel='stylesheet' type='text/css' href='/css/index.css'>
+<link rel='stylesheet' type='text/css' href='/css/login_idfind.css'>
+<link rel='stylesheet' type='text/css' href='/css/login_pwfind.css'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
 
-<script src='/js/index.js'></script>
-<!--  <script src='/js/login.js'></script> -->
+
+<script type="text/javascript" src='/js/login_idfind.js' ></script>
+<script type="text/javascript" src='/js/login_pwfind.js' ></script>
+
 </head>
 <body>
 
@@ -67,10 +75,34 @@
 					<a href="/notice"> <!-- 해당 링크 이동 -->
 						<h4>공지사항</h4></a>
 				</div>
+				
+				
+				<c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 			</div>
 		</div>
 	</div>
 	<!-- 네비게이션 end -->
+	
+	
+	
 	<div id="content_container">
 		<div id="content_container_space">
 
@@ -98,7 +130,7 @@
 						<div id="id">
 							<div id="id_box">
 								<input id="id_text" type="text" maxlength="20" name="id"
-									placeholder="아이디 입력" title="소문자 및 숫자 형태의 ID를 입력해주세요."
+									placeholder="아이디 입력" title="5자 이상의 ID를 입력해주세요. (소문자, 숫자)"
 									required="required" pattern="[a-z0-9]{5,20}" />
 							</div>
 						</div>
@@ -119,21 +151,25 @@
 						<div id="login_btn2" class="btn_form">
 							<!--로그인-->
 							<br> <input id="login_btn" type=submit value="로그인"
-								class="btn btn-dark" id="login_btn">
+								class="btn btn-dark" id="login_btn" name="login_btn">
 						</div>
 					</form>
-
+					
 					<div id="loginfind">
-						<div class="signup">
-							<span> <!--회원가입--> <a href="/member"
-								style="color: blue" id="member">회원가입</a> <!-- 회원가입 페이지 이동 -->
-							</span> <span id="idpwfind" style="font-size: 8pt; text-align: right;">
-								<a href="#" style="color: blue" id="idfind">아이디가 기억나지 않습니다.</a>
-								<br> <a href="#" style="color: blue" id="pwfind">비밀번호가
-									기억나지 않습니다.</a>
-							</span>
-						</div>
-					</div>
+	<div class="signup">
+		<!--회원가입-->
+		<br>
+		<a href="/member" style="color: black" id="member">회원가입 | </a>
+		<a class="idfind_btn" style="color: black; cursor: pointer;" id="member">아이디 찾기 | </a>
+		<a class="pwfind_btn" style="color: black; cursor: pointer;" id="member">비밀번호 찾기</a>
+			<!-- 회원가입 페이지 이동 -->
+		
+		
+	</div>
+</div>
+					
+					<%@ include file="/WEB-INF/views/login_idfind.jsp" %>
+					<%@ include file="/WEB-INF/views/login_pwfind.jsp" %>
 					<br>
 
 				</div>
@@ -141,6 +177,7 @@
 
 			</div>
 		</div>
+		<br>
 	</div>
 
 

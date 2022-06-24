@@ -29,7 +29,6 @@ h4{
 	padding : 10px 30px;
     display: flex;
     align-items: center;
-    text-shadow: 2px 2px 2px gray;
 }
 
 h2{
@@ -48,7 +47,7 @@ h3{
 .adminmember_title_container{
 	width: 100%;
 	display:flex;
-	background-color: #7D7D7D ;
+	background-color: rgb(209, 209, 209);
 	margin-bottom: 5px;
 	justify-content: space-between;
 }
@@ -56,7 +55,7 @@ h3{
 .adminmember_container{
 	width: 100%;
 	display:flex;
-	background-color: rgb(209, 209, 209) ;
+	background-color: #f4f4f4;
 	margin-bottom: 3px;
 	justify-content: space-between;
 }
@@ -195,7 +194,7 @@ h3{
 .quit_type{
 	height: 20px;
 	border:none;
-	background: #7D7D7D ;
+	background: rgb(209, 209, 209);
 	font-size:8px;
 	font-weight: bold;
 }
@@ -203,7 +202,7 @@ h3{
 .report_type{
 	height: 20px;
 	border:none;
-	background: #7D7D7D ;
+	background: rgb(209, 209, 209);
 	font-size:8px;
 	font-weight: bold;
 }
@@ -211,7 +210,7 @@ h3{
 .post_type{
 	height: 20px;
 	border:none;
-	background: #7D7D7D ;
+	background: rgb(209, 209, 209);
 	font-size:8px;
 	font-weight: bold;
 }

@@ -98,6 +98,30 @@ SELECT count(*) FROM member
 delete from member where id = #{id}
 </delete>
 
+<update id="updatepost" parameterType="adminmemberdto">
+	update post
+	set memberid= 'quitmember12'
+	where memberid = #{id} 
+</update>
+
+<update id="updatecomment" parameterType="adminmemberdto">
+	update comment
+	set memberid= 'quitmember12'
+	where memberid = #{id} 
+</update>
+
+<update id="updatecommentreport" parameterType="adminmemberdto">
+	update commentreport
+	set reportid= 'quitmember12'
+	where reportid = #{id} 
+</update>
+
+<update id="updatepostreport" parameterType="adminmemberdto">
+	update postreport
+	set reportid= 'quitmember12'
+	where reportid = #{id} 
+</update>
+
 <update id="quitselect" parameterType="adminmemberdto">
 	update member
 	set status=1 , quitdate=CURRENT_TIMESTAMP

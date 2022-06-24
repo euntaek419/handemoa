@@ -15,8 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- 노토산스 폰트 종료-->
     <script src="/jquery-3.6.0.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='css/alarm.css'>
+<script src='/js/alarm.js'></script>
     <script src='/js/index.js'></script>
-    <script>
+   <script>
     $(document).ready(function () {
 
     let cate;
@@ -41,13 +43,36 @@
         console.log($('#tt').html());
     }
 
-    $('#write_btn').click(function () {
+    $('#write_btn').click(function () { // 게시글 제목, 내용 유효성 검사
         console.log("저장");
-        write(1);
+    	
+        var title_chk = $('#posttitle').val().trim();
+        var content_chk = $('#post_content').val().trim();
+        
+        if( title_chk == ""){
+        	alert("제목을 입력하세요.");
+        	posttitle.focus();
+        }else if( content_chk == ""){
+          	alert("내용을 입력하세요.")
+          	post_content.focus();
+        }else{
+       	 	write(1);
+        }
     });
-    $('#writetemp_btn').click(function () {
+    
+    $('#writetemp_btn').click(function () { // 임시저장 게시글 제목, 내용 유효성 검사
         console.log("임시");
-        write(0);
+        
+        var title_chk = $('#posttitle').val().trim();
+        var content_chk = $('#post_content').val().trim();
+        
+        if( title_chk == ""){
+        	alert("제목을 입력하세요.");
+        }else if( content_chk == ""){
+          	alert("내용을 입력하세요.")
+        }else{
+       	 	write(0);
+        }
     });
 
     function write(tempsave) {
@@ -59,14 +84,14 @@
         url: "/commuinsert",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: { 'catedetailcode': catecode,
-                'memberid': $('#memberid').val(),
-                'author': $('#author').val(),
-                'classtitle': $('#classtitle').val(),
-                'posttitle': $('#posttitle').val(),
-                'content': $('#post_content').val(),
-                'link': $('#link').val(),
-                'thumbnail': $('#thumbnail').val(),
-                'tempsave': tempsave},
+	        	 'memberid': $('#memberid').val(),
+	             'author': $('#author').val(),
+	             'classtitle': $('#classtitle').val(),
+	             'posttitle': $('#posttitle').val(),
+	             'content': $('#post_content').val(),
+	             'link': $('#link').val(),
+	             'thumbnail': $('#thumbnail_add').val(),
+	             'tempsave': tempsave},
         success: function (a) {
             alert("글이 등록되었습니다.");
             if (a == 1) {
@@ -125,7 +150,10 @@ justify-content: flex-end;
 .nav_list_area:nth-child(3) h4{
    color:white;
 }
-    
+
+#post_content{
+   resize: none;
+}
     
     </style>
 </head>
@@ -182,6 +210,28 @@ justify-content: flex-end;
                         <a href="/notice"> <!-- 해당 링크 이동 -->
                             <h4>공지사항</h4></a>
                     </div>
+                    
+                    
+                    
+                    <c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
         </div>
@@ -225,12 +275,12 @@ justify-content: flex-end;
                                     <!-- 반복할 게시물 시작 -->
                                         <input type="hidden" name="divisioncode" value="1" id="divisioncode">
                                         <input type="hidden" name="memberid" value="${member.id}" id="memberid">
-                                        <!-- 강의저자 <input type="text" name="author" id="author"> -->
-                                        <!-- 강의제목 <input type="text" name="classtitle" id="classtitle"><br> -->
-                                        <input type="text" name="posttitle" id="posttitle" placeholder="제목을 입력하세요."><br>
+                                        <input type="hidden" name="author" id="author">
+                                        <input type="hidden" name="classtitle" id="classtitle"><br>
+                                        <input type="text" maxlength='30' name="posttitle" id="posttitle" placeholder="제목을 입력하세요." style="width: 300px;"><br>
                                         <textarea name="content" id="post_content" placeholder="내용을 입력하세요." style="margin-top:20px ;"></textarea><br>
-                                        <!-- 링크 <input type="text" name="link" id="link"><br> -->
-                                        <!-- 썸네일 <input type="text" name="thumbnail" id="thumbnail"><br> -->
+                                        <input type="hidden" name="link" id="link"><br> 
+                                        <input type="hidden" name="thumbnail" id="thumbnail"><br>
                                         <input type="hidden" name="tempsave" value="1" id="tempsave">         
                                     <!-- 반복할 게시물 종료 -->
                                 </div>
@@ -251,24 +301,22 @@ justify-content: flex-end;
                             </div>
                         </div>
                         <div id="rankboard_area">
-                            <h2 id="rankboard_title">베스트 게시글</h2>
-                            <div class="inner_space"></div>
-                            <div id="rankboard_list">
-                                <!-- 반복할 게시물 시작 -->
-                                <c:forEach items="${ rankingboard }" var="list" >
-                                <c:set var="i" value="${i+1}"/>
-                                <div class="rankboard_list_box">
-                                    <div class="rankboard_list_number">
-                                        <h1>${i}</h1>
-                                    </div>
-                                    <div class="rankboard_list_inner">
-                                        <a href="/community?postnum=${list.postnum}">
-                                            <h3>${list.posttitle}</h3>
-                                        </a>
-                                        <p>${list.author} - ${list.classtitle}</p>
-                                    </div>
-                                </div>
-                                </c:forEach>
+							<div id="rankboard_title">베스트 게시글</div>
+							<div class="inner_space"></div>
+							<div id="rankboard_list">
+								<!-- 반복할 게시물 시작 -->
+								<c:forEach items="${ rankingboard }" var="list">
+									<c:set var="i" value="${i+1}" />
+									<div class="rankboard_list_box">
+										<div class="rankboard_list_number">
+											<h1>${i}</h1>
+										</div>
+											<div id="rankboard_post_title">
+											<a href="/communitypost?postnum=${list.postnum}">
+												${list.posttitle} </a>
+										</div>
+									</div>
+								</c:forEach>
                                 <!-- 반복할 게시물 종료 -->
                             </div>
                         </div>

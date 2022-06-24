@@ -15,7 +15,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
-
+<link rel='stylesheet' type='text/css' href='css/alarm.css'>
+<script src='/js/alarm.js'></script>
 <link rel='stylesheet' type='text/css' href='/css/index.css'>
 <link rel='stylesheet' type='text/css'
 	href='/css/communitypostwrite.css'>
@@ -43,15 +44,10 @@ $(document).ready(function(){
     		    form.content.focus();
     		    return false;
     		}
-    	
-    		document.getElementById("posttitle").value = title_check.trim(); // 제목 앞뒤 공백 제거 
-    		
+    		document.getElementById("posttitle").value = title_check.trim(); // 제목 앞뒤 공백 제거
+    		 
+    		document.commu_updateform.submit();
    }
-    
-    function postsave(){ // 게시글 작성
-    	title_content_check();
-    	document.commu_updateform.submit();
-    }
 
     </script>
 
@@ -182,6 +178,27 @@ $(document).ready(function(){
 						<a href="/notice"> <!-- 해당 링크 이동 -->
 							<h4>공지사항</h4></a>
 					</div>
+					
+					
+					<c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -219,7 +236,7 @@ $(document).ready(function(){
 								<!-- placeholder 속성 입력한 데이터가 없는 경우 배경으로 나타난다.실제적으로 입력을 100자까지로 지정 -->
 								<textarea id="posttitle" name="posttitle" class="commutexttitle"
 									placeholder="글 제목" rows="1" style="width: 750px; resize: none;"
-									maxlength="100">${communitydto.posttitle}</textarea>
+									maxlength="30">${communitydto.posttitle}</textarea>
 								<div class="form-group">
 									<!--  여러줄의 데이터를 입력하고 하고자 할때 textarea 태그를 사용한다. -->
 									<!--  textarea 안에 있는 모든 글자는 그대로 나타난다. 공백문자, tag, enter -->
@@ -233,7 +250,7 @@ $(document).ready(function(){
 									</div>
 									<div class="btn_item">
 										<button type="button" class="btn_item"
-											onclick="javascript:postsave()" style='cursor: pointer;'>등록</button>
+											onclick="title_content_check()" style='cursor: pointer;'>등록</button>
 									</div>
 								</div>
 						</form>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -15,6 +15,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel='stylesheet' type='text/css' href='/css/index.css'>
 <link rel='stylesheet' type='text/css' href='/css/bookmark/bookmarkview.css'>
+<link rel='stylesheet' type='text/css' href='css/alarm.css'>
+<script src='/js/alarm.js'></script>
 <script type="text/javascript" src='/js/bookmark/bookmarkview.js'></script>
 <script src='/js/index.js'></script>
 </head>
@@ -72,6 +74,28 @@
 						<a href="/notice"> <!-- 해당 링크 이동 -->
 							<h4>공지사항</h4></a>
 					</div>
+					
+					
+					
+					<c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
             </div>
         </div>
@@ -94,7 +118,7 @@
 				<div id="bookmark_content_box">
 					<!-- 페이지 제목 -->
 					<div class="content_title">
-						<div class="title_bar"><h2>${member.nickname} 님의 북마크</h2></div>
+						<h2>${member.nickname} 님의 북마크</h2>
 					</div>
 					<!-- 상세 검색 -->
 					<div class="content_head">
@@ -113,6 +137,13 @@
 
 					<!-- 북마크 목록-->
 					<div id="bookmark_list">
+						<c:if test="${checkNull == 0}">
+							<p>북마크한 게시글이 없습니다.</p>
+						</c:if>
+						<c:if test="${(fn:length(bookMarkList) == 0) && (checkNull != 0)}">
+						
+							<p>'${searchdetail.searchtxt}'에 대한 북마크 검색 결과가 없습니다.</p>
+						</c:if>
 						<c:forEach var="bookmark" items="${bookMarkList}" varStatus="i">
 							<div class="list_body">
 								<div class="list_item">
@@ -130,7 +161,7 @@
 										<div class="bookmark_item_title"><a href="/rankingpost?postnum=${bookmark.postnum}">${bookmark.posttitle }</a></div>
 									</div>	
 									<div class="bookmark_row">
-										<div class="bookmark_item_title"><a href="/profile?nickname=${bookmark.nickname}">${bookmark.nickname }</a></div>
+										<div class="bookmark_item"><a href="/profile?nickname=${bookmark.nickname}">${bookmark.nickname }</a></div>
 									</div>	
 								</div>						
 							</div>
@@ -164,7 +195,9 @@
 								</div>
 							</c:if>						
 							<c:if test="${pagedto.beginPage == 0}">
-								<a class="false"></a>
+								<div class="page">
+									<a class="false">0</a>
+								</div>
 							</c:if>
 						</c:forEach>
 							

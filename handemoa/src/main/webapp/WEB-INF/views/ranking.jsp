@@ -7,6 +7,7 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>한데모아 - Ranking</title>
+    <link rel='stylesheet' type='text/css' href='css/index.css'>
     <link rel='stylesheet' type='text/css' href='css/ranking.css'>
     <!-- 노토산스 폰트 시작-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- 노토산스 폰트 종료-->
     <script src="/jquery-3.6.0.min.js"></script>
+    <link rel='stylesheet' type='text/css' href='css/alarm.css'>
+	<script src='/js/alarm.js'></script>
     <script src='/js/index.js'></script>
     <script>
     $(document).ready(function () {
@@ -114,7 +117,7 @@
                     
                     <a href="/profile?nickname=${member.nickname}"><h3 style="text-align: center; color">${member.nickname} 님</h3></a>
                     <div style="display: flex;">
-                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #E02C1B">로그아웃</button>
+                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #ce4764;">로그아웃</button>
                     <button id="nav_login_btn" onclick="location.href='/memberedit'" style="color: white; background-color: gray; margin-left: 10px; font-size: 5px;">회원정보수정</button>
                     
                     </div>
@@ -141,6 +144,28 @@
                         <a href="/notice"> <!-- 해당 링크 이동 -->
                             <h4>공지사항</h4></a>
                     </div>
+                    
+                    
+                    
+                    <c:choose>
+						<c:when test="${isLogOn == true && member!= null}">
+
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="http://localhost:3000/note" id="handemore_font">
+										HANDEMORE > </a>
+								</div>
+							</div>
+
+						</c:when>
+						<c:otherwise>
+							<div class="nav_list_area">
+								<div class="handemore_button">
+									<a href="/login" id="handemore_font"> HANDEMORE > </a>
+								</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
                 </div>
             </div>
         </div>

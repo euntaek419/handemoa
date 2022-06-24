@@ -12,8 +12,25 @@ h4{
 	margin:0 0 0 10px;
 }
 
+#handemore_font{
+	color:black;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.handemore_button{
+	display:flex;
+	border: none;
+	background-color: #a6bfe9;
+	margin-top: 20px;
+	height:35px;
+	width:110px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+}
+
 .container {
-	
     display: flex;
 }
 
